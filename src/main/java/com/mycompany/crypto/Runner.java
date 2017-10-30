@@ -6,7 +6,18 @@
 package com.mycompany.crypto;
 
 import java.io.IOException;
-import java.util.logging.LogManager;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.lang.reflect.Type;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
+import com.mycompany.crypto.data.models.Ticker;
+import java.util.Map;
 
 /**
  *
@@ -37,8 +48,24 @@ public class Runner {
     
     public static void main(String[] args){    
         Runner r = new Runner();
-        System.out.print(r.returnTicker());
-    }
+        System.out.println(r.returnTicker());
+        DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        Gson gson;
+    
+        gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+            @Override
+            public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException
+            {
+                return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), DTF);
+            }
+            
+        }).create(); 
+    
+        Type mapOfTicks = new TypeToken<Map<String, Ticker>>(){}.getType();
+        Map<String, Ticker> tickerResults = gson.fromJson(r.returnTicker(), mapOfTicks);
+        System.out.println("Result: " +gson.toJson(tickerResults.get("USDT_BTC")));
+     } 
 
 
     

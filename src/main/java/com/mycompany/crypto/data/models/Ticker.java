@@ -36,4 +36,7 @@ public class Ticker {
     {
         return new Gson().toJson(this);
     }
+    /**
+     * PoloniexActiveLoanTypes activeLoanTypes = gson.fromJson(activeLoansResult, PoloniexActiveLoanTypes.class);
+    */
 }
