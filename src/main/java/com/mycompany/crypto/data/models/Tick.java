@@ -6,13 +6,25 @@
 package com.mycompany.crypto.data.models;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+
+import javafx.util.converter.LocalDateTimeStringConverter;
 
 /**
  *
  * @author marcelo
  */
-public class Ticker {
+public class Tick {
     
     public final BigDecimal last;
     public final BigDecimal lowestAsk;
@@ -21,7 +33,7 @@ public class Ticker {
     public final BigDecimal baseVolume;
     public final BigDecimal quoteVolume;
 
-    public Ticker(BigDecimal last, BigDecimal lowestAsk, BigDecimal highestBid, BigDecimal percentChange, BigDecimal baseVolume, BigDecimal quoteVolume)
+    public Tick(BigDecimal last, BigDecimal lowestAsk, BigDecimal highestBid, BigDecimal percentChange, BigDecimal baseVolume, BigDecimal quoteVolume)
     {
         this.last = last;
         this.lowestAsk = lowestAsk;
@@ -34,9 +46,8 @@ public class Ticker {
     @Override
     public String toString()
     {
+
         return new Gson().toJson(this);
     }
-    /**
-     * PoloniexActiveLoanTypes activeLoanTypes = gson.fromJson(activeLoansResult, PoloniexActiveLoanTypes.class);
-    */
+   
 }
