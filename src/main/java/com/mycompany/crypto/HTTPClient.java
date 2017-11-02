@@ -48,9 +48,9 @@ public class HTTPClient
     {
         HttpRequestBase request = new HttpGet(url);
         /*Comenta isto se não quiseres usar proxy*/
-        HttpHost proxy = new HttpHost("10.144.1.10", 8080, "http");
+        /*HttpHost proxy = new HttpHost("10.144.1.10", 8080, "http");
         RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
-        request.setConfig(config);
+        request.setConfig(config);*/
         
         if (headers != null)
         {

@@ -94,12 +94,16 @@ public class Runner {
             
         });
          gson = gsonBuilder.create();
-    
-        Type type = new TypeToken<Map<String, Tick>>(){}.getType();
-        DataStore d = new DataStore();
+         DataStore ds = new DataStore();
+
+        /*Type type = new TypeToken<Map<String, Tick>>(){}.getType();
+        d.addTicker(new TickerInstance(gson.fromJson(r.returnTicker(), type)));
         d.addTicker(new TickerInstance(gson.fromJson(r.returnTicker(), type)));
         System.out.println(gson.toJson(d.getTickerInstance(0).getTick("USDT_BTC")));
-        System.out.println(d.getTickerInstance(0).getUnixTime());
+        System.out.println(d.getTickerInstance(0).getUnixTime());*/
+        DataFetcher df = new DataFetcher(ds);
+        df.run();
+        
      } 
 
 
