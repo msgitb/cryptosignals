@@ -95,11 +95,12 @@ public class Runner {
         });
         gson = gsonBuilder.create();
         DataStore ds = new DataStore();
-        DataFetcher df = new DataFetcher(ds);
-        df.run();
+        Thread df = new Thread(new DataFetcher(ds));
 
-
+        df.start();
         System.out.println(gson.toJson(ds.getTickerInstance(0).getTick("USDT_BTC")));
+
+
         /*Type type = new TypeToken<Map<String, Tick>>(){}.getType();
         d.addTicker(new TickerInstance(gson.fromJson(r.returnTicker(), type)));
         

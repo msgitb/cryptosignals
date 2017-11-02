@@ -71,7 +71,7 @@ public class DataFetcher implements Runnable{
             System.out.println("Add ticker to dataStore...");
             ds.addTicker(new TickerInstance(gson.fromJson(returnTicker(), type)));
             try {
-                TimeUnit.SECONDS.sleep(1);
+                Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(DataFetcher.class.getName()).log(Level.SEVERE, null, ex);
             }
