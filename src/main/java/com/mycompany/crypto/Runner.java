@@ -98,7 +98,7 @@ public class Runner {
         Thread df = new Thread(new DataFetcher(ds));
 
         df.start();
-        System.out.println(gson.toJson(ds.getTickerInstance(0).getTick("USDT_BTC")));
+        //System.out.println(gson.toJson(ds.getTickerInstance(0).getTick("USDT_BTC")));
 
 
         /*Type type = new TypeToken<Map<String, Tick>>(){}.getType();
