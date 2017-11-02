@@ -10,6 +10,8 @@ import com.google.gson.reflect.TypeToken;
 import com.mycompany.crypto.data.models.DataStore;
 import com.mycompany.crypto.data.models.Tick;
 import com.mycompany.crypto.data.models.TickerInstance;
+import com.mycompany.crypto.data.models.TradingDirection;
+import com.mycompany.crypto.data.models.Transaction;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -46,6 +48,19 @@ public class DataFetcher implements Runnable{
         return null;
     }
     
+    public String returnTradeHistory(String currencyPair, long start){
+        start = (start==0) ?  (System.currentTimeMillis()/1000) - 1500: start; 
+        try {
+            String url = PUBLIC_URL + "command=returnTradeHistory&currencyPair=" + currencyPair + "&start=" + start + "&end=999999999999";
+            return client.getHttp(url, null);
+        }
+        catch
+            (IOException ex)
+        {
+        }
+        return null;
+    }
+    
     @Override
     public void run() {
         Type type = new TypeToken<Map<String, Tick>>(){}.getType();
@@ -60,7 +75,11 @@ public class DataFetcher implements Runnable{
             } catch (InterruptedException ex) {
                 Logger.getLogger(DataFetcher.class.getName()).log(Level.SEVERE, null, ex);
             }
+            i++;
         }
+        String tradeHistory = returnTradeHistory("USDT_BTC", 0);
+        Gson gson2 = new Gson();
+        System.out.println("Direction= " + new TradingDirection(gson2.fromJson(tradeHistory, Transaction[].class)).direction());
     }
     
 }
