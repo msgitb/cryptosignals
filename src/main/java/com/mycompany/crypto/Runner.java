@@ -67,9 +67,9 @@ public class Runner {
     }
 
     
-    public static void main(String[] args){    
+    public static void main(String[] args) throws InterruptedException{    
         Runner r = new Runner();
-        System.out.println(r.returnTicker());
+        //System.out.println(r.returnTicker());
         Gson gson;
         
         DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -93,16 +93,19 @@ public class Runner {
             }
             
         });
-         gson = gsonBuilder.create();
-         DataStore ds = new DataStore();
-
-        /*Type type = new TypeToken<Map<String, Tick>>(){}.getType();
-        d.addTicker(new TickerInstance(gson.fromJson(r.returnTicker(), type)));
-        d.addTicker(new TickerInstance(gson.fromJson(r.returnTicker(), type)));
-        System.out.println(gson.toJson(d.getTickerInstance(0).getTick("USDT_BTC")));
-        System.out.println(d.getTickerInstance(0).getUnixTime());*/
+        gson = gsonBuilder.create();
+        DataStore ds = new DataStore();
         DataFetcher df = new DataFetcher(ds);
         df.run();
+
+
+        System.out.println(gson.toJson(ds.getTickerInstance(0).getTick("USDT_BTC")));
+        /*Type type = new TypeToken<Map<String, Tick>>(){}.getType();
+        d.addTicker(new TickerInstance(gson.fromJson(r.returnTicker(), type)));
+        
+        
+        System.out.println(d.getTickerInstance(0).getUnixTime());*/
+        
         
      } 
 

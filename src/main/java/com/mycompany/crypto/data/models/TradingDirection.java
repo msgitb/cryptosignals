@@ -15,40 +15,38 @@ public class TradingDirection {
     double totalBuy;
     double totalSell;
     double direction;
-    ArrayList<Transaction> trxs;
+    ArrayList<Transaction> trxs = new ArrayList<>();
 
     public TradingDirection(Transaction[] txs) {
-        for(int i=0; i<txs.length; i++)
-        {
-            Transaction t = txs[i];
-            switch (t.getType())
-            {
-                case "sell":
-                    totalSell +=t.amount;
-                    break;
-                case "buy":
-                    totalBuy += t.amount;
-                    break;
-                default:
-                    break;
-            }
-        }
-        if(totalBuy>=totalSell)
-        {
-            direction=-totalBuy/totalSell;
-        }
-        else
-        {
-            direction=totalSell/totalBuy;
-        }
         System.out.println("Got " + txs.length + " transactions");
+        addTransaction(txs);
+        calculateDirection();
     }
     
     public double direction() {
         return this.direction;
     }
     
-    
+    public void addTransaction(Transaction[] trxs)
+    {
+        for (Transaction trx : trxs) {
+            switch (trx.getType()) {
+                case "sell":
+                    this.totalSell += trx.amount;
+                    break;
+                case "buy":
+                    this.totalBuy += trx.amount;
+                    break;
+                default:
+                    break;
+            }
+            this.trxs.add(trx);
+        }
+    }
+
+    private void calculateDirection() {
+        direction = totalSell - totalBuy;
+    }
     
     
 }

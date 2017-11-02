@@ -76,6 +76,7 @@ public class DataFetcher implements Runnable{
                 Logger.getLogger(DataFetcher.class.getName()).log(Level.SEVERE, null, ex);
             }
             i++;
+
         }
         String tradeHistory = returnTradeHistory("USDT_BTC", 0);
         Gson gson2 = new Gson();
