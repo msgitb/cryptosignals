@@ -19,6 +19,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
+import com.mycompany.crypto.data.models.DataReader;
 import com.mycompany.crypto.data.models.DataStore;
 import com.mycompany.crypto.data.models.TickerInstance;
 import com.mycompany.crypto.data.models.Tick;
@@ -96,11 +97,10 @@ public class Runner {
         gson = gsonBuilder.create();
         DataStore ds = new DataStore();
         Thread df = new Thread(new DataFetcher(ds));
-
+        Thread dr = new Thread(new DataReader(ds));
         df.start();
+        dr.start();
         //System.out.println(gson.toJson(ds.getTickerInstance(0).getTick("USDT_BTC")));
-
-
         /*Type type = new TypeToken<Map<String, Tick>>(){}.getType();
         d.addTicker(new TickerInstance(gson.fromJson(r.returnTicker(), type)));
         

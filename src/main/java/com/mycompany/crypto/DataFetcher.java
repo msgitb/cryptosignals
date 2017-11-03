@@ -80,7 +80,8 @@ public class DataFetcher implements Runnable{
         }
         String tradeHistory = returnTradeHistory("USDT_BTC", 0);
         Gson gson2 = new Gson();
-        System.out.println("Direction= " + new TradingDirection(gson2.fromJson(tradeHistory, Transaction[].class)).direction());
+        ds.addTradingDirection(new TradingDirection(gson2.fromJson(tradeHistory, Transaction[].class)));
+        System.out.println("Direction= " + ds.getTradingDirection(0).direction());
     }
     
 }
