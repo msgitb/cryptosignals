@@ -68,20 +68,30 @@ public class DataFetcher implements Runnable{
         int i = 0;
         while(i<3)
         {
-            System.out.println("Add ticker to dataStore...");
-            ds.addTicker(new TickerInstance(gson.fromJson(returnTicker(), type)));
+
+            synchronized(ds)
+            {
+                System.out.println("Add ticker to dataStore...");
+                ds.addTicker(new TickerInstance(gson.fromJson(returnTicker(), type)));
+                ds.notify();
+          
+            String tradeHistory = returnTradeHistory("USDT_BTC", 0);
+            Gson gson2 = new Gson();
+            
+            
+                ds.addTradingDirection(new TradingDirection(gson2.fromJson(tradeHistory, Transaction[].class)));
+                ds.notify();
+            }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(DataFetcher.class.getName()).log(Level.SEVERE, null, ex);
             }
             i++;
 
         }
-        String tradeHistory = returnTradeHistory("USDT_BTC", 0);
+        
         Gson gson2 = new Gson();
-        ds.addTradingDirection(new TradingDirection(gson2.fromJson(tradeHistory, Transaction[].class)));
-        System.out.println("Direction= " + ds.getTradingDirection(0).direction());
     }
     
 }

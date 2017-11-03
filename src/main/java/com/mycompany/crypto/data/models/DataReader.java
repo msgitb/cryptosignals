@@ -23,17 +23,28 @@ public class DataReader implements Runnable{
     @Override
     public void run() {
         int i = 0;
+        int direction = 0;
+        
         while(true){
             
             try {
-                synchronized(ds.getTickerInstances())
+                synchronized(ds)
                 {
-                    ds.getTickerInstances().wait();
-                }
+                    ds.wait();
+                
                 if(ds.tick>=0){
-                Tick lastTick = ds.getTickerInstance(i).getTick("USDT_BTC");
-                System.out.println(lastTick.last);
-            }
+                    ds.tick--;
+                    Tick lastTick = ds.getTickerInstance(i).getTick("USDT_BTC");
+                    System.out.println(i + " " + lastTick.last);
+                    i++;
+                }
+                if(ds.transaction>0)
+                {
+                    System.out.println("Direction= " + ds.getTradingDirection(direction).direction());
+                    direction++;  
+                    ds.transaction--;      
+                }
+                }
             } catch (InterruptedException ex) {
                 Logger.getLogger(DataReader.class.getName()).log(Level.SEVERE, null, ex);
             }
